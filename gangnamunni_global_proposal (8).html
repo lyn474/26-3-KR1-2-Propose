@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>강남언니 글로벌 입점 & 이벤트 확장 프로모션</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F2F0ED;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:#1a1a1a;padding:20px 12px 60px}
+
+/* ── 레이아웃 ── */
+.hospital-bar{max-width:720px;margin:0 auto;background:#fff;border-radius:12px 12px 0 0;border:1.5px solid #ddd;border-bottom:none;padding:13px 20px;display:flex;align-items:center;gap:10px}
+.hospital-bar label{font-size:12px;font-weight:700;color:#aaa;white-space:nowrap}
+.hospital-bar input{flex:1;border:none;outline:none;font-family:inherit;font-size:15px;font-weight:700;color:#1a1a1a;background:transparent}
+.hospital-bar input::placeholder{color:#ccc;font-weight:400}
+.pdf-bar{max-width:720px;margin:0 auto 10px;display:flex;justify-content:flex-end}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #ddd;border-radius:20px;padding:7px 16px;font-family:inherit;font-size:13px;font-weight:600;color:#666;cursor:pointer}
+.pdf-btn:hover{border-color:#FF6B35;color:#FF6B35}
+.page{max-width:720px;margin:0 auto;background:#fff;border-radius:0 0 16px 16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+
+/* ── 히어로 ── */
+.hero{background:#FF6B35;padding:28px 32px 24px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;background:rgba(255,255,255,0.07);border-radius:50%}
+.hero-hospital{font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;display:none}
+.hero-hospital .x{color:rgba(255,255,255,0.5);margin:0 6px;font-weight:300}
+.hero-logo{font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:10px}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:700;padding:3px 11px;border-radius:20px;margin-bottom:10px;letter-spacing:0.4px}
+.hero-title{font-size:24px;font-weight:700;color:#fff;line-height:1.35;margin-bottom:6px;position:relative;z-index:1}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.82)}
+
+/* ── 보안바 ── */
+.conf{display:flex;align-items:flex-start;gap:8px;background:#2C2C2A;color:#FAC775;font-size:11.5px;font-weight:600;padding:10px 22px;line-height:1.6}
+
+/* ── 바디 ── */
+.body{padding:24px 28px 32px}
+
+/* ── 공통 타이틀 ── */
+.sec{font-size:15px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.sec::before{content:'';width:3px;height:18px;background:#FF6B35;border-radius:2px;flex-shrink:0}
+.divider{border:none;border-top:1px solid #EDEBE8;margin:22px 0}
+
+/* ── 일정 카드 ── */
+.sched{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.sched-card{background:#FFF8F5;border:1px solid #FFD4BF;border-radius:10px;padding:14px 16px}
+.sched-label{font-size:11px;font-weight:700;color:#FF6B35;margin-bottom:5px}
+.sched-date{font-size:15px;font-weight:700;color:#1a1a1a;line-height:1.3}
+.sched-sub{font-size:11px;color:#888;margin-top:3px}
+
+/* ── 국가 토글 ── */
+.notice-blue{display:flex;align-items:flex-start;gap:6px;background:#EBF3FC;border:1px solid #B8D4F0;border-radius:8px;padding:9px 12px;margin-bottom:12px;font-size:12px;color:#1A4E8A;line-height:1.6}
+.country-hint{font-size:12px;color:#888;margin-bottom:10px}
+.country-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.cbtn{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:20px;border:1.5px solid #ddd;background:#fff;font-family:inherit;font-size:13px;font-weight:600;color:#888;cursor:pointer;transition:all .15s}
+.cbtn:hover{border-color:#FF6B35;color:#FF6B35}
+.cbtn.on{background:#FF6B35;border-color:#FF6B35;color:#fff}
+.empty{font-size:12.5px;color:#bbb;padding:12px 0;text-align:center}
+
+/* ── 혜택 카드 ── */
+.bcard{background:#fff;border:1.5px solid #FF6B35;border-radius:12px;padding:16px 18px;margin-bottom:10px}
+.bcard-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:8px;line-height:1.5}
+.bcard-desc{font-size:12.5px;color:#555;line-height:1.8}
+.otag{display:inline-block;background:#FFF0EA;color:#CC4A1A;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px;vertical-align:middle}
+.warn-inline{background:#FFF3F3;border-left:2px solid #E24B4A;border-radius:0 6px 6px 0;padding:8px 12px;margin-top:10px;font-size:12px;color:#791F1F;line-height:1.65}
+.cklist{list-style:none;margin-top:8px}
+.cklist li{font-size:12px;color:#666;padding:2px 0;display:flex;align-items:flex-start;gap:5px;line-height:1.6}
+.cklist li::before{content:'✓';color:#FF6B35;font-weight:700;flex-shrink:0}
+.cklist li.x::before{content:'✗';color:#E24B4A}
+
+/* ── 혜택 2 요약 박스 ── */
+.summary-box{background:#FFF8F5;border:1.5px dashed #FF6B35;border-radius:12px;padding:16px 18px;margin-bottom:16px}
+.summary-title{font-size:13px;font-weight:700;color:#CC4A1A;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.summary-desc{font-size:12.5px;color:#555;line-height:1.9}
+.kpi-row{display:flex;gap:0;border:1px solid #EDEBE8;border-radius:10px;overflow:hidden;margin-bottom:16px}
+.kpi{flex:1;padding:13px 12px;text-align:center;border-right:1px solid #EDEBE8}
+.kpi:last-child{border-right:none}
+.kpi-label{font-size:10.5px;color:#FF6B35;font-weight:700;margin-bottom:4px}
+.kpi-val{font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.3}
+.kpi-sub{font-size:10.5px;color:#888;margin-top:2px}
+
+/* ── 스텝 ── */
+.steps{display:flex;flex-direction:column;gap:0;margin-top:4px}
+.step{display:flex;gap:12px;align-items:flex-start;position:relative;padding-bottom:14px}
+.step:last-child{padding-bottom:0}
+.step-line{position:absolute;left:14px;top:28px;width:2px;background:#EDEBE8;height:calc(100% - 6px)}
+.step:last-child .step-line{display:none}
+.step-n{width:28px;height:28px;min-width:28px;border-radius:50%;background:#FF6B35;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:1}
+.step-body{flex:1}
+.step-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:3px}
+.stag{display:inline-block;background:#FFF0EA;color:#CC4A1A;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
+.step-desc{font-size:12px;color:#666;line-height:1.75}
+.ex{background:#F5F3F0;border-radius:8px;padding:9px 12px;font-size:11.5px;color:#666;line-height:1.8;margin-top:6px}
+.ex strong{color:#1a1a1a}
+
+/* ── 혜택 3 ── */
+.b3-intro{font-size:12.5px;color:#666;line-height:1.7;margin-bottom:14px}
+.b3-kpi{display:flex;gap:0;border:1px solid #EDEBE8;border-radius:10px;overflow:hidden;margin-bottom:14px}
+.b3-kpi .kpi{flex:1}
+.copy-box{background:#EEF3FF;border:1px solid #C5D5F5;border-radius:8px;padding:11px 14px;margin-bottom:14px}
+.copy-title{font-size:12px;font-weight:700;color:#2A4E9F;margin-bottom:4px}
+.copy-desc{font-size:12px;color:#445;line-height:1.7}
+.tag-panel{display:none;background:#F9F9F9;border:1px solid #E8E8E8;border-radius:10px;padding:14px 16px;margin-bottom:8px}
+.tag-panel.on{display:block}
+.tag-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.tag-badge{background:#FF6B35;color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px}
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.pill{background:#fff;border:1px solid #ddd;border-radius:20px;font-size:11.5px;color:#555;padding:3px 10px;white-space:nowrap}
+.tag-note{font-size:11px;color:#aaa}
+.tag-empty{font-size:12.5px;color:#bbb;padding:10px 0;text-align:center}
+.cta-btn{display:inline-flex;align-items:center;gap:6px;background:#FF6B35;color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:24px;text-decoration:none;margin-top:14px}
+.cta-sub{font-size:11px;color:#aaa;margin-top:6px}
+
+/* ── 주의사항 ── */
+.warn{background:#FFF0F0;border:1.5px solid #E24B4A;border-radius:12px;padding:18px 20px;margin-top:4px}
+.warn-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.warn-ico{width:26px;height:26px;min-width:26px;background:#E24B4A;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.warn-hdr-txt{font-size:14px;font-weight:700;color:#A32D2D}
+.warn-em{background:#A32D2D;color:#fff;font-size:12.5px;font-weight:700;padding:10px 14px;border-radius:8px;margin-bottom:10px;line-height:1.75}
+.warn-li{font-size:12px;color:#791F1F;padding:4px 0;display:flex;gap:6px;line-height:1.6;border-bottom:0.5px solid #F7C1C1}
+.warn-li:last-child{border-bottom:none}
+.warn-li::before{content:'⚠';flex-shrink:0;font-size:11px}
+
+/* ── 문의 ── */
+.contact{background:#F5F3F0;border-radius:10px;padding:12px 16px;margin-top:16px;display:flex;align-items:center;gap:8px}
+.contact label{font-size:11px;font-weight:700;color:#aaa}
+.contact-val{font-size:13px;font-weight:600;color:#444;display:flex;align-items:center;gap:4px}
+.contact-val input{border:none;border-bottom:1.5px solid #ddd;outline:none;font-family:inherit;font-size:13px;font-weight:700;color:#FF6B35;background:transparent;padding:0 3px;width:100px}
+.contact-print{display:none;font-size:13px;font-weight:600;color:#444}
+
+/* ── 푸터 ── */
+.footer{background:#F5F3F0;padding:13px 20px;text-align:center;font-size:11px;color:#bbb;border-top:1px solid #E8E8E8}
+
+/* ── 프린트 ── */
+@media print{
+  @page{margin:10mm;size:A4}
+  body{background:#fff;padding:0}
+  .hospital-bar,.pdf-bar{display:none!important}
+  .page{border-radius:0;box-shadow:none;max-width:100%}
+  .hero,.conf,.warn,.warn-em,.summary-box,.sched-card,.kpi-row,.copy-box,.tag-panel,.bcard{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hero{background:#FF6B35!important}
+  .conf{background:#2C2C2A!important;color:#FAC775!important}
+  .warn{background:#FFF0F0!important}
+  .warn-em{background:#A32D2D!important;color:#fff!important}
+  .summary-box{background:#FFF8F5!important}
+  .sched-card{background:#FFF8F5!important}
+  .copy-box{background:#EEF3FF!important}
+  .tag-panel{page-break-inside:avoid}
+  .bcard{border:1.5px solid #FF6B35!important}
+  .cbtn,.country-hint,.notice-blue,.empty,.tag-empty{display:none!important}
+  .bcard,.tag-panel.on{display:block!important}
+  .step{page-break-inside:avoid}
+  .contact-val input{display:none!important}
+  .contact-print{display:inline!important}
+  .bcard.print-hide{display:none!important}
+}
+@media(max-width:540px){
+  .body{padding:18px 16px 24px}
+  .sched{grid-template-columns:1fr}
+  .kpi-row,.b3-kpi{flex-direction:column}
+  .kpi{border-right:none;border-bottom:1px solid #EDEBE8}
+  .kpi:last-child{border-bottom:none}
+  .hero-title{font-size:20px}
+}
+
+  /* due 일정 카드 */
+  .due-row{display:flex;align-items:stretch;gap:10px;margin-bottom:16px}
+  .due-card{flex:1;border-radius:10px;padding:13px 15px}
+  .due-warn{background:#FFF8F5;border:1.5px solid #FFB38A}
+  .due-ok{background:#F0FBF4;border:1.5px solid #7DC98A}
+  .due-label{font-size:11px;font-weight:700;margin-bottom:5px}
+  .due-warn .due-label{color:#CC4A1A}
+  .due-ok .due-label{color:#1E7A3A}
+  .due-date{font-size:15px;font-weight:700;color:#1a1a1a;line-height:1.3}
+  .due-sub{font-size:11px;color:#888;margin-top:3px}
+  .due-arrow{font-size:22px;color:#ccc;display:flex;align-items:center;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div class="hospital-bar">
+  <label>수신 병원</label>
+  <input id="hosp-input" type="text" placeholder="병원명을 입력하세요" oninput="onHosp(this.value)">
+</div>
+
+<div class="pdf-bar">
+  <button class="pdf-btn" onclick="doPrint()">⬇ PDF로 저장</button>
+</div>
+
+<div class="page">
+
+  <!-- 히어로 -->
+  <div class="hero">
+    <div class="hero-hospital" id="hero-hospital"></div>
+    <div id="hero-logo" class="hero-logo">강남언니</div>
+    <div class="hero-badge">글로벌 서비스 단독 프로모션</div>
+    <div class="hero-title">글로벌 신규 입점 &amp;<br>이벤트 확장 프로모션</div>
+    <div class="hero-sub" id="hero-sub">일본 · 태국 · 미국 · 중국 · 대만 — 7월 선착순 한정 혜택</div>
+  </div>
+
+  <!-- 보안 -->
+  <div class="conf">🔒&nbsp; 본 제안서는 특정 병원 대상으로만 제공되는 특별 프로모션입니다. 외부 공유 시 혜택이 즉시 종료될 수 있으니 보안 유지를 부탁드립니다.</div>
+
+  <div class="body">
+
+    <!-- 일정 -->
+    <div class="sec">프로모션 일정</div>
+    <div class="sched">
+      <div class="sched-card">
+        <div class="sched-label">글로벌 서비스 계약 마감</div>
+        <div class="sched-date">2026.07.31(금)</div>
+        <div class="sched-sub">이 날까지 계약 완료 필수</div>
+      </div>
+      <div class="sched-card">
+        <div class="sched-label">이벤트 신청 마감</div>
+        <div class="sched-date">2026년 7월 중</div>
+        <div class="sched-sub">⚡ 선착순 — 조기 마감 가능</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 혜택 1 -->
+    <div class="sec">혜택 1 — 국가별 월정액 면제</div>
+    <div class="notice-blue">ℹ️&nbsp; <span><strong>혜택 1·2·3</strong> 모두 아래에서 선택한 국가에 동일하게 적용됩니다.</span></div>
+    <div class="country-hint">해당 병원의 대상 국가를 선택하세요 (복수 선택 가능)</div>
+    <div class="country-row">
+      <button class="cbtn" id="btn-jp" onclick="toggle('jp')">🇯🇵 일본</button>
+      <button class="cbtn" id="btn-th" onclick="toggle('th')">🇹🇭 태국</button>
+      <button class="cbtn" id="btn-us" onclick="toggle('us')">🇺🇸 미국</button>
+      <button class="cbtn" id="btn-cn" onclick="toggle('cn')">🇨🇳 중국</button>
+      <button class="cbtn" id="btn-tw" onclick="toggle('tw')">🇹🇼 대만</button>
+    </div>
+
+    <div class="empty" id="empty1">국가를 선택하면 혜택 내용이 표시됩니다.</div>
+
+    <!-- 일본 단독 카드 -->
+    <div class="bcard" id="card-jp" style="display:none">
+      <div class="bcard-title">🇯🇵 일본 — 신규 입점 병원 한정 3개월 월정액 면제 <span class="otag">100만원 / VAT 별도</span></div>
+      <div class="bcard-desc">
+        일본 서비스는 <strong>원칙적으로 월정액 면제가 없습니다.</strong><br>
+        이번 프로모션 한정으로, <strong style="color:#CC4A1A">신규 입점 병원에 한해</strong> 7월 31일까지 글로벌 서비스 계약 완료 시 <strong style="color:#CC4A1A">3개월 월정액을 면제</strong>해드립니다.
+        <div class="warn-inline"><strong>⚠ 이미 입점한 병원</strong> — 월정액 면제는 미적용, 혜택 2·3은 별도 적용 가능합니다.</div>
+        <ul class="cklist" style="margin-top:10px">
+          <li>7월 내 글로벌 서비스 계약 완료 필수</li>
+          <li class="x">기존 입점 병원은 월정액 면제 미적용</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 태국/미국/중국/대만 합쳐진 카드 -->
+    <div class="bcard" id="card-others" style="display:none">
+      <div class="bcard-title" id="others-title">— 한시적 월정액 면제 <span class="otag">100만원 / VAT 별도</span></div>
+      <div class="bcard-desc">
+        입점 시 <strong style="color:#CC4A1A">월정액(100만원, VAT 별도)을 한시적으로 면제</strong>해드립니다.<br>유료 전환 시 전환 1개월 전에 사전 고지합니다.
+        <ul class="cklist" style="margin-top:10px">
+          <li>7월 내 글로벌 서비스 계약 완료 필수</li>
+          <li>유료 전환 1개월 전 고지 예정</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 혜택 2 -->
+    <div class="sec">혜택 2 — 신규 국가 DB 150 도달까지 CPV 무료</div>
+    <div style="font-size:12.5px;color:#666;margin-bottom:14px;line-height:1.7">입점한 신규 국가에서 <strong style="color:#1a1a1a">종합 DB(시술 건수) 150에 도달할 때까지</strong> CPV를 받지 않습니다.</div>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">CPV 혜택</div>
+        <div class="kpi-val">DB 150까지 무료</div>
+        <div class="kpi-sub">CPV 발생 시점 기준</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">프로모션 기간</div>
+        <div class="kpi-val">최대 6개월</div>
+        <div class="kpi-sub">DB 150 도달까지</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">락인 기간</div>
+        <div class="kpi-val">DB 150 달성 후 3개월</div>
+        <div class="kpi-sub">퇴점 금지 · 이벤트 유지</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-title">글로벌 서비스 계약 + 이벤트 신청<span class="stag">~7월 중</span></div>
+          <div class="step-desc">7월 내 글로벌 서비스 계약 및 이벤트 신청을 완료해야 합니다. 이벤트가 등록되면 해당 국가 DB 집계가 시작됩니다.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-title">DB 150 도달 전까지 CPV 무료<span class="stag">최대 6개월</span></div>
+          <div class="step-desc">해당 국가 종합 DB가 <strong>150에 도달하는 시점까지</strong> CPV가 발생하지 않습니다.</div>
+          <div class="ex"><strong>예시</strong> — 일본 입점 후 3개월 만에 DB 150 달성<br>→ 3개월간 CPV 무료 적용 후 정상 과금 전환</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div><div class="step-line"></div>
+        <div class="step-body">
+          <div class="step-title">DB 150 달성 후 — 락인 3개월</div>
+          <div class="step-desc">DB 150 달성 시점부터 <strong>3개월간 퇴점 금지 + 이벤트 10개 이상 유지</strong> 조건이 적용됩니다. 미충족 시 혜택이 소급 취소될 수 있습니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 혜택 3 -->
+    <div class="sec">혜택 3 — 국가별 타겟 태그 이벤트 무료 제작</div>
+    <div class="b3-intro">글로벌 서비스에서 <strong style="color:#1a1a1a">수요는 높지만 공급이 부족한 타겟 태그</strong>를 선별했습니다.<br>한국에 동일 태그 이벤트가 있다면 <strong style="color:#CC4A1A">국가당 최대 10개까지 무료</strong>로 복붙 제작해드립니다.</div>
+
+    <div class="due-row">
+      <div class="due-card due-warn">
+        <div class="due-label">⚡ 이벤트 신청 마감</div>
+        <div class="due-date">2026년 7월 중</div>
+        <div class="due-sub">선착순 — 조기 마감 가능</div>
+      </div>
+      <div class="due-arrow">→</div>
+      <div class="due-card due-ok">
+        <div class="due-label">✅ 승인 · 노출 마감</div>
+        <div class="due-date">2026.08.31(월)</div>
+        <div class="due-sub">반드시 이 날까지 노출 필수</div>
+      </div>
+    </div>
+
+    <div class="kpi-row b3-kpi">
+      <div class="kpi">
+        <div class="kpi-label">제작 방식</div>
+        <div class="kpi-val">복붙 이미지</div>
+        <div class="kpi-sub">한국 이미지 기반 번역 삽입</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">지원 수량</div>
+        <div class="kpi-val">국가당 최대 10개</div>
+        <div class="kpi-sub">한 번에 최대 30~40개</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">제작 소요</div>
+        <div class="kpi-val">최소 2~3주</div>
+        <div class="kpi-sub">신청 후 일정 안내</div>
+      </div>
+    </div>
+
+    <div class="copy-box">
+      <div class="copy-title">📋 복붙 이미지 방식이란?</div>
+      <div class="copy-desc">국내 이벤트 이미지를 그대로 활용해 해당 국가 언어로 번역 후, 동일한 이미지 내 번역된 텍스트를 삽입해 제작합니다. 별도 디자인 없이 빠르게 제작 가능합니다.</div>
+    </div>
+
+    <div class="tag-empty" id="tag-empty">국가를 선택하면 지원 태그 목록이 표시됩니다.</div>
+    
+        <div class="tag-panel" id="tag-jp">
+          <div class="tag-title">🇯🇵 일본 <span class="tag-badge">18개 태그</span></div>
+          <div class="pills"><span class="pill">얼굴지방흡입</span><span class="pill">바디지방흡입</span><span class="pill">얼굴보톡스</span><span class="pill">주름보톡스</span><span class="pill">바디보톡스</span><span class="pill">온다리프팅</span><span class="pill">쌍꺼풀(자연유착)</span><span class="pill">리쥬란힐러</span><span class="pill">눈썹반영구</span><span class="pill">포텐자</span><span class="pill">큐스위치엔디야그레이저</span><span class="pill">피코스팟</span><span class="pill">점제거시술</span><span class="pill">스킨보톡스</span><span class="pill">치아미백</span><span class="pill">물광주사</span><span class="pill">앞트임</span><span class="pill">소프웨이브</span></div>
+          <div class="tag-note">※ 위 태그에 대응하는 한국 이벤트 보유 시 신청 가능</div>
+        </div>
+        <div class="tag-panel" id="tag-th">
+          <div class="tag-title">🇹🇭 태국 <span class="tag-badge">15개 태그</span></div>
+          <div class="pills"><span class="pill">올리지오리프팅</span><span class="pill">울쎄라피프라임</span><span class="pill">쥬베룩</span><span class="pill">슈링크유니버스</span><span class="pill">코재수술</span><span class="pill">쥬브젠</span><span class="pill">눈밑필러</span><span class="pill">안면거상술</span><span class="pill">잔주름보톡스</span><span class="pill">얼굴지방이식</span><span class="pill">눈밑지방재배치</span><span class="pill">이중턱지방흡입</span><span class="pill">이마거상술(엔도타인)</span><span class="pill">백옥주사</span><span class="pill">볼스컬트라</span></div>
+          <div class="tag-note">※ 위 태그에 대응하는 한국 이벤트 보유 시 신청 가능</div>
+        </div>
+        <div class="tag-panel" id="tag-us">
+          <div class="tag-title">🇺🇸 미국 <span class="tag-badge">15개 태그</span></div>
+          <div class="pills"><span class="pill">세르프리프팅</span><span class="pill">치아미백</span><span class="pill">리팟레이저</span><span class="pill">겨드랑이미백</span><span class="pill">두피케어</span><span class="pill">큐어젯</span><span class="pill">프락셀레이저</span><span class="pill">소프웨이브</span><span class="pill">브라질리언제모</span><span class="pill">콧날개수술</span><span class="pill">가슴(지방이식)</span><span class="pill">목주름거상술</span><span class="pill">전신지방흡입</span><span class="pill">젠틀맥스프로</span><span class="pill">미라드라이</span></div>
+          <div class="tag-note">※ 위 태그에 대응하는 한국 이벤트 보유 시 신청 가능</div>
+        </div>
+        <div class="tag-panel" id="tag-cn">
+          <div class="tag-title">🇨🇳 중국 <span class="tag-badge">15개 태그</span></div>
+          <div class="pills"><span class="pill">올타이트리프팅</span><span class="pill">IPL</span><span class="pill">코필러</span><span class="pill">흉터제거레이저</span><span class="pill">헤어라인반영구</span><span class="pill">큐어젯</span><span class="pill">피코토닝</span><span class="pill">애교필러</span><span class="pill">피코슈어</span><span class="pill">팔지방흡입</span><span class="pill">헤어라인모발이식</span><span class="pill">눈밑지방재배치</span><span class="pill">양악수술</span><span class="pill">쌍꺼풀(절개)</span><span class="pill">광대축소(전체)</span></div>
+          <div class="tag-note">※ 위 태그에 대응하는 한국 이벤트 보유 시 신청 가능</div>
+        </div>
+        <div class="tag-panel" id="tag-tw">
+          <div class="tag-title">🇹🇼 대만 <span class="tag-badge">15개 태그</span></div>
+          <div class="pills"><span class="pill">쥬브젠</span><span class="pill">리니어지</span><span class="pill">피코슈어</span><span class="pill">온다리프팅</span><span class="pill">큐어젯</span><span class="pill">소프웨이브</span><span class="pill">아쿠아필링</span><span class="pill">물광주사</span><span class="pill">올리지오리프팅</span><span class="pill">허벅지지방흡입</span><span class="pill">복부지방흡입</span><span class="pill">팔지방흡입</span><span class="pill">눈재수술</span><span class="pill">텐써마</span><span class="pill">프로필로</span></div>
+          <div class="tag-note">※ 위 태그에 대응하는 한국 이벤트 보유 시 신청 가능</div>
+        </div>
+
+    <div style="text-align:center;margin-top:16px">
+      <a class="cta-btn" href="https://forms.fillout.com/t/b9LxmBmTvBus?id=" target="_blank">✍️ 해외 이벤트 무료 제작 신청하기</a>
+      <div class="cta-sub">선착순 마감 · 상위 병원 한정</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 주의사항 -->
+    <div class="warn">
+      <div class="warn-hdr">
+        <div class="warn-ico">⚠</div>
+        <div class="warn-hdr-txt">반드시 확인하세요 — 혜택 환수 조건</div>
+      </div>
+      <div class="warn-em">⚠ 7월 내 서비스 계약 또는 이벤트 신청을 완료하지 않거나, 이벤트를 중간에 비활성화·중단하는 경우 모든 혜택을 환수 조치할 수 있습니다.</div>
+      <div class="warn-li">서비스 계약 미완료 시 월정액 면제 및 CPV 무료 혜택 전부 소급 취소됩니다.</div>
+      <div class="warn-li">DB 150 달성 후 3개월 락인 기간 내 퇴점하거나 이벤트 10개 미만 유지 시 혜택이 소급 취소됩니다.</div>
+      <div class="warn-li">제작된 이벤트를 미등록하거나 3개월 내 비활성화할 경우 이벤트 제작 지원이 제한될 수 있습니다.</div>
+      <div class="warn-li">본 프로모션은 예외 한정 혜택으로, 조건 위반 시 사전 고지 없이 즉시 종료될 수 있습니다.</div>
+    </div>
+
+    <!-- 문의 -->
+    <div class="contact">
+      <label>문의</label>
+      <div class="contact-val">
+        담당 강남언니 영업팀 과장&nbsp;
+        <input type="text" placeholder="이름 입력" oninput="onContact(this.value)">
+        <span class="contact-print" id="contact-print"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">© 2026 강남언니 — 본 제안서는 내부 전용 자료입니다. 무단 배포를 금합니다.</div>
+</div>
+
+<script>
+var active={jp:false,th:false,us:false,cn:false,tw:false};
+var flags={jp:'🇯🇵 일본',th:'🇹🇭 태국',us:'🇺🇸 미국',cn:'🇨🇳 중국',tw:'🇹🇼 대만'};
+var otherKeys=['th','us','cn','tw'];
+
+function toggle(c){
+  active[c]=!active[c];
+  document.getElementById('btn-'+c).classList.toggle('on',active[c]);
+  render();
+}
+
+function render(){
+  var any=Object.values(active).some(function(v){return v;});
+  document.getElementById('empty1').style.display=any?'none':'block';
+  // 일본
+  document.getElementById('card-jp').style.display=active.jp?'block':'none';
+  // 나머지 합치기
+  var others=otherKeys.filter(function(k){return active[k];});
+  var othersCard=document.getElementById('card-others');
+  if(others.length>0){
+    othersCard.style.display='block';
+    document.getElementById('others-title').innerHTML=
+      others.map(function(k){return flags[k];}).join(' · ')+
+      ' — 한시적 월정액 면제 <span class="otag">100만원 / VAT 별도</span>';
+  } else {
+    othersCard.style.display='none';
+  }
+  // 태그 패널
+  var anyTag=false;
+  ['jp','th','us','cn','tw'].forEach(function(k){
+    var el=document.getElementById('tag-'+k);
+    if(el){
+      el.classList.toggle('on',active[k]);
+      if(active[k]) anyTag=true;
+    }
+  });
+  document.getElementById('tag-empty').style.display=anyTag?'none':'block';
+  // 히어로 sub
+  var sel=Object.keys(active).filter(function(k){return active[k];});
+  document.getElementById('hero-sub').textContent=
+    sel.length>0
+      ? sel.map(function(k){return flags[k];}).join(' · ')+' — 7월 선착순 한정 혜택'
+      : '일본 · 태국 · 미국 · 중국 · 대만 — 7월 선착순 한정 혜택';
+}
+
+function onHosp(v){
+  var hh=document.getElementById('hero-hospital');
+  var hl=document.getElementById('hero-logo');
+  if(v.trim()){
+    hh.style.display='block';
+    hh.innerHTML='강남언니<span class="x">✕</span>'+v.trim();
+    hl.style.display='none';
+  } else {
+    hh.style.display='none';
+    hl.style.display='block';
+  }
+}
+
+function onContact(v){
+  document.getElementById('contact-print').textContent=v.trim()?v.trim():'';
+}
+
+window.addEventListener('afterprint',function(){
+  ['jp','th','us','cn','tw'].forEach(function(k){
+    var c=document.getElementById('card-'+k);
+    if(c) c.classList.remove('print-hide');
+  });
+});
+
+function doPrint(){
+  var any=Object.values(active).some(function(v){return v;});
+  if(!any){alert('PDF에 포함할 국가를 먼저 선택해주세요.');return;}
+  // 비선택 카드 숨기기
+  if(!active.jp) document.getElementById('card-jp').classList.add('print-hide');
+  var others=otherKeys.filter(function(k){return active[k];});
+  if(others.length===0) document.getElementById('card-others').classList.add('print-hide');
+  setTimeout(function(){window.print();},200);
+}
+</script>
+</body>
+</html>
